@@ -8,7 +8,7 @@ const ContactItem = ({ el, handleDelete, onChangeFilter }) => {
   const { name, number, id } = el;
   const handleClick = () => {
     handleDelete(id);
-    onChangeFilter('');
+    onChangeFilter("");
   };
   return (
     <li className={styles.listItem}>

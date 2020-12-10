@@ -1,29 +1,36 @@
-import { ADD, REMOVE, FILTER } from "./phonebookTypes";
+// import { ADD, REMOVE, FILTER } from "./phonebookTypes";
+import { createAction } from "@reduxjs/toolkit";
 import { v4 as uuid } from "uuid";
 
-const addItem = (name, number) => {
-  return {
-    type: ADD,
-    payload: {
-      id: uuid(),
-      name: name,
-      number: number,
-    },
-  };
-};
+const addItem = createAction("phonebook/add", (name, number) => ({ payload: { id: uuid(), name, number } }));
 
-const removeItem = (id) => {
-  return {
-    type: REMOVE,
-    payload: id,
-  };
-};
+// const addItem = (name, number) => {
+//   return {
+//     type: ADD,
+//     payload: {
+//       id: uuid(),
+//       name: name,
+//       number: number,
+//     },
+//   };
+// };
 
-const filter = (str) => {
-  return {
-    type: FILTER,
-    payload: str,
-  };
-};
+const removeItem = createAction("phonebook/remove");
 
-export default { addItem, removeItem,filter };
+// const removeItem = (id) => {
+//   return {
+//     type: REMOVE,
+//     payload: id,
+//   };
+// };
+
+const filter = createAction("phonebook/filter");
+
+// const filter = (str) => {
+//   return {
+//     type: FILTER,
+//     payload: str,
+//   };
+// };
+
+export default { addItem, removeItem, filter };
