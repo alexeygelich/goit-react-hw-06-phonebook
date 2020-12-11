@@ -1,24 +1,31 @@
 import React from "react";
-import PropTypes from "prop-types";
 import ContactItem from "../ContactItem";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
-
+import { connect } from "react-redux";
 import "./ContactList.css";
 
-const ContactList = ({ visibleContact }) => (
-  <TransitionGroup component="ul" className="contact-list">
-    {visibleContact.map((el) => {
-      return (
-        <CSSTransition key={el.id} timeout={500} classNames="item">
-          <ContactItem el={el} />
-        </CSSTransition>
-      );
-    })}
-  </TransitionGroup>
-);
+const ContactList = ({ contacts, filter }) => {
+  const getFiteredContact = (items, query) => {
+    return items.filter((item) => item.name.toLowerCase().includes(query.toLowerCase()));
+  };
+  const visibleContacts = getFiteredContact(contacts, filter);
 
-ContactList.propTypes = {
-  visibleContact: PropTypes.array.isRequired,
+  return (
+    <TransitionGroup component="ul" className="contact-list">
+      {visibleContacts.map((el) => {
+        return (
+          <CSSTransition key={el.id} timeout={500} classNames="item">
+            <ContactItem el={el} />
+          </CSSTransition>
+        );
+      })}
+    </TransitionGroup>
+  );
 };
 
-export default ContactList;
+const mapStateToProps = ({ contacts }) => ({
+  contacts: contacts.items,
+  filter: contacts.filter,
+});
+
+export default connect(mapStateToProps)(ContactList);

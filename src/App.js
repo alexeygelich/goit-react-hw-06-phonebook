@@ -7,7 +7,6 @@ import { CSSTransition } from "react-transition-group";
 import Container from "./components/Container";
 import "./App.css";
 import { connect } from "react-redux";
-import phonebookActions from "./redux/phonebook/phonebookActions";
 
 class App extends Component {
   componentDidUpdate(prevProps, PrevState) {
@@ -17,14 +16,9 @@ class App extends Component {
     }
   }
 
-  getFiteredContact = () => {
-    const { contacts, filter } = this.props;
-    return contacts.filter((contact) => contact.name.toLowerCase().includes(filter.toLowerCase()));
-  };
-
   render() {
     const { contacts } = this.props;
-    const visibleContact = this.getFiteredContact();
+
     return (
       <Container>
         <section>
@@ -39,7 +33,7 @@ class App extends Component {
             <Filter />
           </CSSTransition>
 
-          <ContactList visibleContact={visibleContact} />
+          <ContactList />
         </section>
       </Container>
     );
@@ -48,10 +42,6 @@ class App extends Component {
 
 const mapStateToProps = ({ contacts }) => ({
   contacts: contacts.items,
-  filter: contacts.filter,
 });
 
-const mapDispatchToprops = {
-  addItem: phonebookActions.addItem,
-};
-export default connect(mapStateToProps, mapDispatchToprops)(App);
+export default connect(mapStateToProps)(App);

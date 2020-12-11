@@ -4,11 +4,10 @@ import styles from "./ContactItem.module.css";
 import { connect } from "react-redux";
 import phonebookActions from "../../redux/phonebook/phonebookActions";
 
-const ContactItem = ({ el, handleDelete, onChangeFilter }) => {
+const ContactItem = ({ el, handleDelete }) => {
   const { name, number, id } = el;
   const handleClick = () => {
     handleDelete(id);
-    onChangeFilter("");
   };
   return (
     <li className={styles.listItem}>
@@ -26,7 +25,6 @@ ContactItem.propTypes = {
 };
 
 const mapDispatchToprops = {
-  onChangeFilter: phonebookActions.filter,
   handleDelete: phonebookActions.removeItem,
 };
 
